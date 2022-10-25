@@ -30,10 +30,10 @@ void UFSFoundationOperator::GetSelectConnectList(AFGBuildable* Buildable, TArray
 		FTransform Transform = Foundation->GetTransform();
 		FVector Loc = Transform.GetLocation();
 
-		Shape.SetBox(FVector(Foundation->mSize / 2.0 + 50.0f, Foundation->mSize / 2.0 - 10.0f, Foundation->mHeight / 2.0 + Foundation->mElevation / 2.0 + 50.0f));
+		Shape.SetBox(FVector(Foundation->mDepth / 2.0 + 50.0f, Foundation->mWidth / 2.0 - 10.0f, Foundation->mHeight / 2.0 + Foundation->mElevation / 2.0 + 50.0f));
 		World->OverlapMultiByChannel(Result, FVector(Loc.X, Loc.Y, Loc.Z + Foundation->mElevation / 2.0), Transform.GetRotation(), ECollisionChannel::ECC_Visibility, Shape);
 
-		Shape.SetBox(FVector(Foundation->mSize / 2.0 - 10.0f, Foundation->mSize / 2.0 + 50.0f, Foundation->mHeight / 2.0 + Foundation->mElevation / 2.0 + 50.0f));
+		Shape.SetBox(FVector(Foundation->mDepth / 2.0 - 10.0f, Foundation->mWidth / 2.0 + 50.0f, Foundation->mHeight / 2.0 + Foundation->mElevation / 2.0 + 50.0f));
 		World->OverlapMultiByChannel(Result, FVector(Loc.X, Loc.Y, Loc.Z + Foundation->mElevation / 2.0), Transform.GetRotation(), ECollisionChannel::ECC_Visibility, Shape);
 
 
