@@ -85,26 +85,12 @@ void AFSController::Init() {
 
 	AFGCharacterPlayer::OnEquipmentEquipped.AddUObject<AFSController>(this, &AFSController::onPlayerEquipmentEquipped);
 	AFGCharacterPlayer::OnEquipmentUnequipped.AddUObject<AFSController>(this, &AFSController::onPlayerEquipmentUnequipped);
-
-	// TODO Most recent patch for u6 broke this, find alternative?
-	/*
-	FScriptDelegate Func1;
-	Func1.BindUFunction(this, FName("onBuildGunRecipeChanged"));
-	FGBuildGun->mOnRecipeChanged.Add(Func1);
-
-	FScriptDelegate Func2;
-	Func2.BindUFunction(this, FName("onBuildGunStateChanged"));
-	FGBuildGun->mOnStateChanged.Add(Func2);
-	*/
-
-	// TODO This attempt at fix didn't work either
-	/*
+	
 	if (FGBuildGun != nullptr) {
 		FGBuildGun->mOnRecipeChanged.AddDynamic(this, &AFSController::onBuildGunRecipeChanged);
 
 		FGBuildGun->mOnStateChanged.AddDynamic(this, &AFSController::onBuildGunStateChanged);
 	}
-	*/
 
 	this->SetActorTickEnabled(true);
 	Timer.Start();
