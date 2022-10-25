@@ -1,0 +1,252 @@
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableConveyorBelt.h b/Source/FactoryGame/Public/Buildables/FGBuildableConveyorBelt.h
+index 701eb758f..600a8dfe5 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableConveyorBelt.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableConveyorBelt.h
+@@ -175,6 +175,8 @@ protected:
+ 
+ private:
+ 	friend class AFGConveyorBeltHologram;
++	friend class UFSConveyorBeltOperator;
++    friend class UFSAdaptiveUtil;
+ 
+ 	/** Meshes for items. */
+ 	UPROPERTY( Meta = ( NoAutoJson ) )
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableConveyorLift.h b/Source/FactoryGame/Public/Buildables/FGBuildableConveyorLift.h
+index 406fa28fe..b09b7790c 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableConveyorLift.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableConveyorLift.h
+@@ -106,6 +106,7 @@ public:
+ 
+ private:
+ 	friend class AFGConveyorLiftHologram;
++	friend class UFSAdaptiveUtil;
+ 
+ 	/**
+ 	 * The transform of the top part.
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableJumppad.h b/Source/FactoryGame/Public/Buildables/FGBuildableJumppad.h
+index b4d8d3ce7..ac9adaa38 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableJumppad.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableJumppad.h
+@@ -156,6 +156,8 @@ private:
+ 	void ConstructSplineFromTrajectoryData();
+ 
+ protected:
++	friend class UFSJumppadOperator;
++
+ 	/** Power capacity of the internal battery. */
+ 	UPROPERTY( EditDefaultsOnly, Category = "JumpPad", meta = ( ClampMin = "0.0" ) )
+ 	float mPowerBankCapacity;
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableLadder.h b/Source/FactoryGame/Public/Buildables/FGBuildableLadder.h
+index 1c65b9264..dcbc8d506 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableLadder.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableLadder.h
+@@ -58,6 +58,7 @@ private:
+ 	void OnRep_NumSegments();
+ 
+ protected:
++	friend class UFSLadderOperator;
+ 
+ 	/** Width of the ladder */
+ 	UPROPERTY( EditDefaultsOnly, Category = "Ladder" )
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildablePipeBase.h b/Source/FactoryGame/Public/Buildables/FGBuildablePipeBase.h
+index 9a0b1c8d0..7a54c3588 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildablePipeBase.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildablePipeBase.h
+@@ -87,6 +87,8 @@ public:
+ 
+ 	const static float PIPE_COST_LENGTH_MULTIPLIER;
+ protected:
++	friend class UFSPipelineOperator;
++
+ 	/** Mesh to use for his conveyor. */
+ 	UPROPERTY( EditDefaultsOnly, Category = "Pipes" )
+ 	class UStaticMesh* mMesh;
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildablePipelinePump.h b/Source/FactoryGame/Public/Buildables/FGBuildablePipelinePump.h
+index d389d014b..708dc741c 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildablePipelinePump.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildablePipelinePump.h
+@@ -132,6 +132,8 @@ private:
+ 	void UpdateFlowLimitOnFluidBox();
+ 	
+ private:
++	friend class UFSPumpOperator;
++
+ 	/** Maximum pressure this pump applies. [meters] */
+ 	UPROPERTY( EditDefaultsOnly, Category = "Pump" )
+ 	float mMaxPressure;
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildablePowerPole.h b/Source/FactoryGame/Public/Buildables/FGBuildablePowerPole.h
+index 55180f643..3a32b6da8 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildablePowerPole.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildablePowerPole.h
+@@ -78,6 +78,8 @@ protected:
+ 	TSubclassOf<class UFGPoleConnectionsWidget> mConnectionWidgetClass;
+ 
+ private:
++	friend class UFSPowerPoleOperator;
++
+ 	/** The connection on this pole. */
+ 	UPROPERTY( VisibleAnywhere, Category = "PowerPole" )
+ 	TArray<class UFGPowerConnectionComponent*> mPowerConnections;
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableRailroadTrack.h b/Source/FactoryGame/Public/Buildables/FGBuildableRailroadTrack.h
+index 3349498b5..0c45e586f 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableRailroadTrack.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableRailroadTrack.h
+@@ -211,6 +211,7 @@ protected:
+ private:
+ 	friend class AFGRailroadTrackHologram;
+ 	friend class AFGRailroadSubsystem;
++	friend class UFSRailroadTrackOperator;
+ 
+ 	/** The spline component for this train track. */
+ 	UPROPERTY( VisibleAnywhere, Category = "Spline" )
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableResourceExtractorBase.h b/Source/FactoryGame/Public/Buildables/FGBuildableResourceExtractorBase.h
+index dec76544d..36b5e299e 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableResourceExtractorBase.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableResourceExtractorBase.h
+@@ -100,6 +100,8 @@ protected:
+ 	FName mExtractorTypeName = "";
+ 
+ private:
++	friend class UFSResourceExtractorOperator;
++
+ 	/** DEPRECATED - Only used for old save support. Use mExtractableResource instead.
+ 	*   The resource node we want to extract from.
+ 	*/
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableSplitterSmart.h b/Source/FactoryGame/Public/Buildables/FGBuildableSplitterSmart.h
+index 72b8a8e5a..133482afc 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableSplitterSmart.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableSplitterSmart.h
+@@ -98,6 +98,8 @@ protected:
+ 	FOnSortRulesChanged OnSortRulesChangedDelegate;
+ 
+ private:
++	friend class UFSConveyorSmartSplitterOperator;
++
+ 	/** These are the sorting rules the player has entered. */
+ 	UPROPERTY( ReplicatedUsing = OnRep_SortRules, SaveGame, EditDefaultsOnly, Category = "Sort", Meta = (NoAutoJson = true) )
+ 	TArray< FSplitterSortRule > mSortRules;
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatform.h b/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatform.h
+index 0449f96b6..e6e5156c4 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatform.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatform.h
+@@ -100,6 +100,9 @@ private:
+ 	void AssignRailroadTrack( class AFGBuildableRailroadTrack* track );
+ 
+ protected:
++	friend class UFSTrainPlatformOperator;
++    friend class UFSTrainStationOperator;
++
+ 	UPROPERTY( SaveGame )
+ 	class AFGBuildableRailroadTrack* mRailroadTrack;
+ 
+diff --git a/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatformCargo.h b/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatformCargo.h
+index 084d3c056..fe708f289 100644
+--- a/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatformCargo.h
++++ b/Source/FactoryGame/Public/Buildables/FGBuildableTrainPlatformCargo.h
+@@ -324,6 +324,8 @@ protected:
+ 	float mCurrentDockForDuration;
+ 
+ private:
++	friend class UFSTrainPlatformCargoOperator;
++
+ 	/** Inventory where we transfer items to when unloading from a vehicle. Never reference this pointer directly. Use mCargoInventoryHandler->GetActiveInventory(). */
+ 	UPROPERTY( SaveGame )
+ 	class UFGInventoryComponent* mInventory;
+diff --git a/Source/FactoryGame/Public/Equipment/FGWeapon.h b/Source/FactoryGame/Public/Equipment/FGWeapon.h
+index 69a60f999..97d9c9a29 100644
+--- a/Source/FactoryGame/Public/Equipment/FGWeapon.h
++++ b/Source/FactoryGame/Public/Equipment/FGWeapon.h
+@@ -241,6 +241,8 @@ public:
+ 	FORCEINLINE AFGHUD* GetAssociatedHud() const { return mAssociatedHud; }
+ 
+ protected:
++	friend class AFSController;
++
+ 	// Begin AFGEquipment interface
+ 	virtual void AddEquipmentActionBindings() override;
+ 	// End AFGEquipment interface
+diff --git a/Source/FactoryGame/Public/FGBuildableSubsystem.h b/Source/FactoryGame/Public/FGBuildableSubsystem.h
+index 6709c1bf6..98451643f 100644
+--- a/Source/FactoryGame/Public/FGBuildableSubsystem.h
++++ b/Source/FactoryGame/Public/FGBuildableSubsystem.h
+@@ -383,6 +383,7 @@ public:
+ 	TArray< TSubclassOf< class AFGBuildable > > mPreviewSkinsOnBuildablesList;
+ 	
+ private:
++	friend class UFSSyncBuild;
+ 
+ 	/** last used net construction ID. Used to identify pending constructions over network. Will increase ID every constructed building. */
+ 	FNetConstructionID mLastServerNetConstructionID;
+diff --git a/Source/FactoryGame/Public/FGColoredInstanceManager.h b/Source/FactoryGame/Public/FGColoredInstanceManager.h
+index f654aa6d4..a3402a4f1 100644
+--- a/Source/FactoryGame/Public/FGColoredInstanceManager.h
++++ b/Source/FactoryGame/Public/FGColoredInstanceManager.h
+@@ -55,6 +55,7 @@ public:
+ 		}
+ 
+ 	private:
++		friend class UFSSelection;
+ 		friend UFGColoredInstanceManager;
+ 
+ 		TArray<float> CustomData;
+@@ -102,6 +103,8 @@ private:
+ 	//class UHierarchicalInstancedStaticMeshComponent* CreateHierarchicalInstancingComponent( class UStaticMesh* staticMesh, uint8 numCustomData, bool useAsOccluder, FVector2D& minMaxCullDistance );
+ 	class UHierarchicalInstancedStaticMeshComponent* CreateHierarchicalInstancingComponent( class UStaticMesh* staticMesh,TArray<class UMaterialInterface*> overridenMaterials, uint8 numCustomData, bool useAsOccluder, FVector2D& minMaxCullDistance );
+ private:
++	friend class UFSSelection;
++
+ 	UPROPERTY( EditAnywhere, Category = "UFGColoredInstanceManager")
+ 	class UHierarchicalInstancedStaticMeshComponent* mInstanceComponent;
+ 
+diff --git a/Source/FactoryGame/Public/FGFactoryConnectionComponent.h b/Source/FactoryGame/Public/FGFactoryConnectionComponent.h
+index 78538496d..0a58e541c 100644
+--- a/Source/FactoryGame/Public/FGFactoryConnectionComponent.h
++++ b/Source/FactoryGame/Public/FGFactoryConnectionComponent.h
+@@ -236,6 +236,8 @@ private:
+ 		TArray< FOverlapResult > potentialBlockers );
+ 
+ protected:
++	friend class UFSConveyorOperator;
++
+ 	/** Physical type of connector used for this connection. */
+ 	UPROPERTY( EditDefaultsOnly, Category = "Connection" )
+ 	EFactoryConnectionConnector mConnector;
+diff --git a/Source/FactoryGame/Public/FGGameInstance.h b/Source/FactoryGame/Public/FGGameInstance.h
+index 14c86fe52..f33a70d38 100644
+--- a/Source/FactoryGame/Public/FGGameInstance.h
++++ b/Source/FactoryGame/Public/FGGameInstance.h
+@@ -236,6 +236,8 @@ public:
+ 	class UFGOnlineSessionClient* GetOnlineSession();
+ 
+ protected:
++	friend class FFactorySkylineModule;
++
+ 	// Called when a map has loaded properly in Standalone
+ 	virtual void LoadComplete( const float loadTime, const FString& mapName ) override;
+ 
+diff --git a/Source/FactoryGame/Public/FGTrainPlatformConnection.h b/Source/FactoryGame/Public/FGTrainPlatformConnection.h
+index dc2f0404c..1fa9e587a 100644
+--- a/Source/FactoryGame/Public/FGTrainPlatformConnection.h
++++ b/Source/FactoryGame/Public/FGTrainPlatformConnection.h
+@@ -77,6 +77,8 @@ public:
+ 	FTimerHandle mDrawDebugTimerHandle;
+ 
+ protected:
++	friend class UFSTrainPlatformOperator;
++
+ 	/** This bool indicates an arbitrary direction of this platform. It is used for stepping through platforms 
+ 	*	Platforms that connect must have mismatched values for their snapped components ( i.e: 1 -> 0 || 0 -> 1 && !(1 -> 1) etc. )
+ 	*/
+diff --git a/Source/FactoryGame/Public/Hologram/FGLadderHologram.h b/Source/FactoryGame/Public/Hologram/FGLadderHologram.h
+index ad233b014..28afdaa2b 100644
+--- a/Source/FactoryGame/Public/Hologram/FGLadderHologram.h
++++ b/Source/FactoryGame/Public/Hologram/FGLadderHologram.h
+@@ -56,6 +56,8 @@ protected:
+ 	void UpdateClearance();
+ 
+ private:
++	friend class UFSLadderOperator;
++
+ 	UPROPERTY( EditDefaultsOnly, Category = "Ladder" )
+ 	float mLadderBottomSnapThreshold;
+ 

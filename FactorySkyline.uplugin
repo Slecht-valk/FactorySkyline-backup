@@ -1,0 +1,32 @@
+{
+	"FileVersion": 3,
+	"Version": 0,
+	"VersionName": "0.2.4",
+	"SemVersion": "0.2.4",
+	"FriendlyName": "FactorySkyline",
+	"Description": "Reboot of factory skyline",
+	"Category": "Modding",
+	"CreatedBy": "cepheidqq",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "https://ficsit.app/mod/7bDghQkAYz8d3c",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "FactorySkyline",
+			"Type": "Runtime",
+			"LoadingPhase": "PostDefault"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SML",
+			"SemVersion": "^3.2.0",
+			"Enabled": true
+		}
+	]
+}
